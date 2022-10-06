@@ -1,0 +1,78 @@
+[build-system]
+    build-backend = "poetry.core.masonry.api"
+    requires      = ["poetry-core>=1.0.0"]
+[tool.poetry]
+    authors     = ["Tim Holzapfel"]
+    classifiers = ["Development Status :: 5 - Production/Stable"]
+    description = "Automated browser."
+    keywords    = ["Browser", "Tor", "Firefox", "Chrome"]
+    license     = "MIT"
+    name        = "automated_browser"
+    packages    = [{ include = "automated_browser", from = "src" }]
+    readme      = "Readme.md"
+    repository  = "https://github.com/Tim-Holzapfel/FirefoxDriver.git"
+    version     = "1.0.0"
+[tool.poetry.dependencies]
+    func-timeout        = "^4.3"
+    importlib-resources = "^5.9"
+    numpy               = "^1.2"
+    pandas              = "^1.4"
+    psutil              = "^5.9"
+    python              = ">=3.8,<3.11"
+    regex               = "^2022.7"
+    selenium            = "^4.3"
+    spyder-kernels      = "^2.3"
+    termcolor           = "^1.1"
+    webdrivermanager    = "^0.10"
+[tool.poetry.group.dev.dependencies]
+    PyYAML          = "*"
+    black           = "*"
+    mypy            = "*"
+    pylint          = "*"
+    types-PyYAML    = "*"
+    types-requests  = "*"
+    types-termcolor = "*"
+    wheel           = "*"
+[tool.black]
+    line-length = 78
+[tool.pycln]
+    all = true
+[tool.poetry.scripts]
+    download-albums = "OrganizeFiles.parser:parse_albums"
+    organize        = "OrganizeFiles.parser:parse_main"
+[tool.pyright]
+    exclude                   = ["**/dev", "**/.venv"]
+    reportGeneralTypeIssues   = true
+    reportMissingModuleSource = false
+    reportPrivateUsage        = false
+    reportUnknownMemberType   = false
+    reportUnknownVariableType = true
+[tool.pytest.ini_options]
+    addopts    = "-ra -q"
+    minversion = "6.0"
+    testpaths  = ["tests", "tests/setup"]
+[tool.mypy]
+    allow_untyped_globals    = false
+    check_untyped_defs       = true
+    color_output             = true
+    disable_error_code       = ["no-redef", "no-untyped-call"]
+    disallow_incomplete_defs = true
+    disallow_subclassing_any = false
+    disallow_untyped_calls   = true
+    disallow_untyped_defs    = true
+    implicit_reexport        = false
+    local_partial_types      = false
+    no_implicit_optional     = true
+    python_version           = "3.10"
+    show_column_numbers      = true
+    show_error_codes         = true
+    show_error_context       = true
+    strict_optional          = true
+    warn_no_return           = true
+    warn_redundant_casts     = true
+    warn_return_any          = false
+    warn_unreachable         = true
+    warn_unused_configs      = true
+    warn_unused_ignores      = true
+[tool.pydocstyle]
+    docstring-convention = "numpy"

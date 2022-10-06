@@ -1,0 +1,82 @@
+{
+  "tasks": [
+    // SECTION Install Poetry
+    {
+      "command": "poetry install",
+      "label": "Install Poetry",
+      "presentation": {
+        "clear": false,
+        "echo": true,
+        "focus": false,
+        "panel": "shared",
+        "reveal": "always",
+        "showReuseMessage": false
+      },
+      "type": "shell"
+    },
+    // !SECTION
+    // SECTION Poetry Build
+    {
+      "command": "poetry build",
+      "dependsOn": [
+        "Install Poetry"
+      ],
+      "label": "Build",
+      "presentation": {
+        "clear": false,
+        "echo": true,
+        "focus": false,
+        "panel": "shared",
+        "reveal": "always",
+        "showReuseMessage": false
+      },
+      "type": "shell"
+    },
+    // !SECTION
+    // SECTION Deactivate Env
+    {
+      "command": "exit",
+      "dependsOn": [
+        "Build"
+      ],
+      "label": "Deactivate Env",
+      "presentation": {
+        "clear": false,
+        "echo": true,
+        "focus": false,
+        "panel": "shared",
+        "reveal": "always",
+        "showReuseMessage": false
+      },
+      "type": "shell"
+    },
+    // !SECTION
+    // SECTION Install Globally
+    {
+      "dependsOn": [
+        "Deactivate Env"
+      ],
+      "group": {
+        "isDefault": true,
+        "kind": "build"
+      },
+      "label": "Install Globally",
+      "presentation": {
+        "clear": true,
+        "echo": true,
+        "focus": false,
+        "panel": "new",
+        "reveal": "always",
+        "showReuseMessage": false
+      },
+      "type": "shell",
+      "windows": {
+        "command": "python -m pip install ${workspaceFolder}/dist/${workspaceFolderBasename}-1.0.0.tar.gz"
+      }
+    },
+    // !SECTION
+  ],
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0"
+}
