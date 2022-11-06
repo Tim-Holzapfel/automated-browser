@@ -2,10 +2,10 @@
     build-backend = "poetry.core.masonry.api"
     requires      = ["poetry-core>=1.0.0"]
 [tool.poetry]
-    authors     = ["Tim Holzapfel"]
+    authors     = ["Tim Holzapfel <timholzapfel@outlook.com>"]
     classifiers = ["Development Status :: 5 - Production/Stable"]
     description = "Automated browser."
-    keywords    = ["Browser", "Tor", "Firefox", "Chrome"]
+    keywords    = ["Browser", "Tor", "Firefox"]
     license     = "MIT"
     name        = "automated_browser"
     packages    = [{ include = "automated_browser", from = "src" }]
@@ -21,25 +21,56 @@
     python              = ">=3.8,<3.11"
     regex               = "^2022.7"
     selenium            = "^4.3"
-    spyder-kernels      = "^2.3"
     termcolor           = "^1.1"
     webdrivermanager    = "^0.10"
 [tool.poetry.group.dev.dependencies]
-    PyYAML          = "*"
     black           = "*"
+    darglint        = "*"
+    flake8          = "*"
     mypy            = "*"
+    pycodestyle     = "^2.9.1"
+    pydocstyle      = { extras = ["toml"], version = "*" }
     pylint          = "*"
+    spyder-kernels  = "*"
     types-PyYAML    = "*"
     types-requests  = "*"
     types-termcolor = "*"
     wheel           = "*"
 [tool.black]
     line-length = 78
+[tool.isort]
+    balanced_wrapping              = true
+    case_sensitive                 = true
+    combine_as_imports             = true
+    combine_star                   = true
+    dedup_headings                 = true
+    ensure_newline_before_comments = true
+    float_to_top                   = true
+    force_grid_wrap                = 6
+    from_first                     = false
+    group_by_package               = true
+    ignore_comments                = true
+    import_heading_firstparty      = "Package Library"
+    import_heading_future          = "Future Implementations"
+    import_heading_localfolder     = "Local Library"
+    import_heading_stdlib          = "Standard Library"
+    import_heading_thirdparty      = "Thirdparty Library"
+    include_trailing_comma         = true
+    length_sort                    = false
+    length_sort_straight           = false
+    lexicographical                = true
+    line_length                    = 78
+    lines_after_imports            = 2
+    lines_between_sections         = 0
+    lines_between_types            = 0
+    multi_line_output              = 3
+    profile                        = "black"
+    remove_redundant_aliases       = false
+    use_parentheses                = true
+    virtual_env                    = ".venv"
+    wrap_length                    = 78
 [tool.pycln]
     all = true
-[tool.poetry.scripts]
-    download-albums = "OrganizeFiles.parser:parse_albums"
-    organize        = "OrganizeFiles.parser:parse_main"
 [tool.pyright]
     exclude                   = ["**/dev", "**/.venv"]
     reportGeneralTypeIssues   = true
@@ -47,10 +78,6 @@
     reportPrivateUsage        = false
     reportUnknownMemberType   = false
     reportUnknownVariableType = true
-[tool.pytest.ini_options]
-    addopts    = "-ra -q"
-    minversion = "6.0"
-    testpaths  = ["tests", "tests/setup"]
 [tool.mypy]
     allow_untyped_globals    = false
     check_untyped_defs       = true

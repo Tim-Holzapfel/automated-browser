@@ -2,7 +2,6 @@
 
 # Standard Library
 import atexit
-
 from functools import partialmethod
 from subprocess import Popen
 from time import perf_counter
@@ -12,19 +11,18 @@ from typing import Any, Literal, Optional
 import regex as re
 import win32con
 import win32gui
-
 from func_timeout import func_set_timeout
 from psutil import NoSuchProcess, process_iter, wait_procs
 from regex import Pattern
 from termcolor import colored
 
 # Package Library
-from FirefoxDriver.driver.filepaths import FilePaths
+from automated_browser.driver.filepaths import FilePaths
 
 
 @atexit.register
 def java_kill() -> None:
-    """Terminate all processes associated with the scraping."""
+    """Terminate all processes associated with the Tor browser."""
     p_pat: Pattern[str] = re.compile(
         r"(jqs|javaw|java|geckodriver|phantomjs|firefox)\.exe"
     )
@@ -48,16 +46,19 @@ def java_kill() -> None:
 
 
 class TorBrowser(FilePaths):
+    """Start Tor Browser."""
+
     def __init__(self) -> None:
+        """Initialize class."""
         self.tor_pat: Pattern[str] = re.compile(r"^About\sTor.*Tor\sBrowser$")
         self.proc_list: list[str] = []
+        super().__init__()
 
-    def enum_callback(
+    def _enum_callback(
         self,
         hwnd: str,
         extra: Optional[Any] = None,  # pylint: disable=unused-argument
     ) -> None:
-        """Enumerate callback function."""
         if bool(self.tor_pat.search(win32gui.GetWindowText(hwnd))):
             win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
             self.proc_list.append(hwnd)
@@ -65,17 +66,17 @@ class TorBrowser(FilePaths):
     @func_set_timeout(timeout=80)
     def start_tor(self, t_max: int = 80) -> Popen[bytes]:
         """
-        _summary_
+        Start Tor browser.
 
         Parameters
         ----------
-        t_max : int, optional
-            _description_, by default 80
+        t_max : int
+            Seconds to wait for the application start, by default 80.
 
         Returns
         -------
         Popen[bytes]
-            _description_
+            Tor browser handle.
         """
         self.print_method_init("start_tor", "I will try to start TOR now...")
         java_kill()
@@ -83,7 +84,7 @@ class TorBrowser(FilePaths):
 
         t_start: float = perf_counter()
         while True:
-            win32gui.EnumWindows(self.enum_callback, None)
+            win32gui.EnumWindows(self._enum_callback, None)
             diff_t: float = round(t_max - (perf_counter() - t_start), 1)
             self.print_counter(
                 "start_tor",
@@ -106,19 +107,6 @@ class TorBrowser(FilePaths):
             "red", "green", "yellow", "blue", "magenta", "cyan", "white"
         ],
     ) -> None:
-        """
-        _summary_
-
-        Parameters
-        ----------
-        method : str
-            _description_
-        msg : str
-            _description_
-        print_col : Literal["red", "green", "yellow", "blue", "magenta",
-        "cyan", "white"]
-            _description_
-        """
         msg_join: str = " ".join(msg.split())
         method_col: str = colored(
             text=method, color=print_col, attrs=["bold"]
@@ -134,7 +122,16 @@ class TorBrowser(FilePaths):
     )
 
     def print_counter(self, method: str, msg: str) -> None:
-        """Return print statement with the desired color."""
+        """
+        Return print statement with the desired color.
+
+        Parameters
+        ----------
+        method : str
+            Print header.
+        msg : str
+            Message to print.
+        """
         msg_join: str = " ".join(msg.split())
         method_col: str = colored(text=method, color="red", attrs=["bold"])
         print(

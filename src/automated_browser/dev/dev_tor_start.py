@@ -1,5 +1,39 @@
+# Standard Library
+import json
+from pathlib import Path
+
+# Thirdparty Library
+import FirefoxDriver
+import regex as re
+from importlib_resources import files
+
 # Package Library
-from FirefoxDriver.driver.firefox import Firefox
+from automated_browser.driver.filepaths import FilePaths
+from automated_browser.driver.firefox import Firefox
+from automated_browser.driver.torbrowser import TorBrowser
+
+
+driver = TorBrowser()
+
+
+dir(driver)
+
+
+tor_exe = driver.start_tor(t_max=80)
+
+
+
+
+
+file_paths = FilePaths()
+
+
+dir(file_paths)
+
+
+file_paths.tor_path
+
+
 
 
 if __name__ == "__main__":
@@ -8,13 +42,10 @@ if __name__ == "__main__":
     driver.get("https://google.com")
 
 
-import json
-import FirefoxDriver
 
 
 json_path = "D:/Github/FirefoxDriver/src/FirefoxDriver/data/settings/browser_settings.json"
 
-from importlib_resources import files
 
 
 settings_path = (
@@ -25,7 +56,6 @@ settings_path = (
 )
 
 
-from pathlib import Path
 t1 = Path(settings_path)
 
 
@@ -38,7 +68,6 @@ with open(settings_path, "r") as read_file:
     settings_dict = json.load(read_file)
 
 
-import regex as re
 
 re_ld = re.compile("__")
 re_sd = re.compile("_")

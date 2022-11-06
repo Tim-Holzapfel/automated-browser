@@ -2,14 +2,12 @@
 
 # Standard Library
 import json
-
 from os import devnull
 from pathlib import Path
 from time import sleep
 
 # Thirdparty Library
 import regex as re
-
 from func_timeout import func_set_timeout
 from importlib_resources import files
 from regex import Pattern
@@ -60,16 +58,17 @@ class Firefox(WebDriver, FilePaths):
         onion_network: bool = True,
         accept_insecure_certs: bool = True,
     ) -> None:
-        """Start a Firefox marionette and route traffic through Tor.
+        """
+        Start a Firefox and optionally route traffic through Tor.
 
         Parameters
         ----------
         headless : bool, optional
-            Start the browser with a Graphical User Interface (GUI).
-            The default is False.
+            Start the browser with a GUI, by default False.
         onion_network : bool, optional
-            Route the in- and outgoing traffic through the onion network.
-            The default is True.
+            Route the traffic through the onion network, by default True.
+        accept_insecure_certs : bool, optional
+            Accept insecure certicates, by default True.
         """
         self.headless: bool = headless
         self.accept_insecure_certs: bool = accept_insecure_certs
@@ -78,7 +77,7 @@ class Firefox(WebDriver, FilePaths):
         self.re_sd: Pattern[str] = re.compile("_")
         self.settings_path: Path = Path(
             str(
-                files(automated_browser)
+                files("automated_browser")
                 .joinpath("data")
                 .joinpath("settings")
                 .joinpath("browser_settings.json")
@@ -152,7 +151,7 @@ class Firefox(WebDriver, FilePaths):
 
         Returns
         -------
-        List[WebElement]
+        list[WebElement]
         """
         return self.find_elements(by=By.CSS_SELECTOR, value=css_value)
 
@@ -246,7 +245,7 @@ class Firefox(WebDriver, FilePaths):
         output_dict : dict
             Dictionary constructed from input.
         """
-        with open(str(self.settings_path), "r") as read_file:
+        with open(str(self.settings_path), mode="r") as read_file:
             settings_dict = json.load(read_file)
 
         # Replace dict keys
