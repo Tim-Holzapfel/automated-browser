@@ -2,16 +2,20 @@
     build-backend = "poetry.core.masonry.api"
     requires      = ["poetry-core>=1.0.0"]
 [tool.poetry]
-    authors     = ["Tim Holzapfel <timholzapfel@outlook.com>"]
+    authors = ["Tim Holzapfel <timholzapfel@outlook.com>"]
     classifiers = ["Development Status :: 5 - Production/Stable"]
     description = "Automated browser."
-    keywords    = ["Browser", "Tor", "Firefox"]
-    license     = "MIT"
-    name        = "automated_browser"
-    packages    = [{ include = "automated_browser", from = "src" }]
-    readme      = "Readme.md"
-    repository  = "https://github.com/Tim-Holzapfel/FirefoxDriver.git"
-    version     = "1.0.0"
+    exclude = [
+        "src/automated_browser/dev",
+        "src/automated_browser/data/executables/",
+    ]
+    keywords = ["Browser", "Tor", "Firefox"]
+    license = "MIT"
+    name = "automated_browser"
+    packages = [{ include = "automated_browser", from = "src" }]
+    readme = "Readme.md"
+    repository = "https://github.com/Tim-Holzapfel/FirefoxDriver.git"
+    version = "1.0.0"
 [tool.poetry.dependencies]
     func-timeout        = "^4.3"
     importlib-resources = "^5.9"
