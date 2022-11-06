@@ -27,6 +27,8 @@ share/python-wheels/
 MANIFEST
 .venv
 **/dev
+**/executables
+poetry.lock
 .vscode
 # PyInstaller
 #  Usually these files are written by a python script from a template
